@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Projects</title>
+    <link rel="shortcut icon"
+        href="https://cdn2.iconfinder.com/data/icons/digital-business-2/64/AI-robot-technology-brain-chip-512.png">
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/qna"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"></script> -->
+    <style>
+        body {
+            font-family: 'Courgette', cursive;
+        }
+
+        form,
+        .tags,
+        p {
+            width: 80%;
+            margin: 5% 10%;
+        }
+
+        .comment {
+            font-size: 25px;
+            display: block;
+            text-decoration-line: underline;
+        }
+
+        .button {
+            margin-top: 5px !important;
+            left: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="nav-left">
+            <a class="brand" href="#">AI-Projects</a>
+        </div>
+        <div class="nav-right">
+            <div class="tabs">
+                <a class="tab text-dark" style="border-bottom: 2px solid black;">CommentSense</a>
+                <a class="tab">StoQueAns</a>
+                <a class="tab">WhatIsIt</a>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div id="cs">
+        <h1 class="text-center">Comment Sense</h1>
+
+        <p class="text-center">Before you comment verbally or digitally make sure it's not toxic!<small
+                class="is-center">For assistance use Artificial Intelligence ;)</small></p>
+        <hr>
+        <form id="toxform" action="">
+            <label class="comment text-center" for="comment">Comment</label>
+            <input type="text" class="bd-dark" id="comment" placeholder="Your comment goes here">
+            <div class="is-center">
+                <button id="submit" type="submit" class="button dark is-marginless">Submit</button>
+                <button type="reset" class="button outline dark is is-marginless">Reset</button>
+            </div>
+        </form>
+        <p hidden class="tags text-center">
+        </p>
+
+    </div>
+
+    <div hidden id="sqa">
+        <h1 class="text-center">Story Question Answer</h1>
+        <p class="text-center">Are you lazy to find an answer to a question from a paragraph? Don't
+            Worry so is Yashas ;)<small class="is-center">So this A.I. project of his will surely help you!</small></p>
+        <hr>
+        <form id="sqaform" action="">
+            <label for="story">Story</label>
+            <textarea id="story" cols="30" class="bd-dark" rows="5"
+                placeholder="Once up on a time there lived a web-developer whose name was Yashas,..."></textarea>
+            <label for="question">Question</label>
+            <input type="text" class="bd-dark" id="question" placeholder="Who here is referred to web-developer?">
+            <label for="answer">Answer</label>
+            <input type="text" id="answer" class="bd-dark" readonly placeholder="Yashas">
+            <div class="is-center">
+                <button id="sqasubmit" type="submit" class="button dark is-marginless">Submit</button>
+                <button type="reset" class="button outline dark is is-marginless">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <div hidden id="imgdet">
+        <h1 class="text-center">What Is It?</h1>
+        <img hidden src="" alt="">
+        <p class="text-center">Detect what the object is!... digitally<small class="is-center">For
+                assistance use Artificial Intelligence ;)</small></p>
+        <hr>
+        <form id="imgdetform">
+            <label class="comment text-center" for="imagepicker">Attach An Image</label>
+            <input type="file" id="imagepicker" class="bd-dark" accept="image/*">
+            <div class="is-center">
+                <button id="imgdetsubmit" type="submit" class="button dark is-marginless">Submit</button>
+                <button type="reset" class="button outline dark is is-marginless">Reset</button>
+            </div>
+        </form>
+        <p hidden class="sayit text-center">
+        </p>
+    </div>
+
+    <script>
+        const tabs = document.getElementsByClassName('tab')
+        const input = document.querySelector('#toxform')
+        const submitbtn = document.getElementById('submit')
+        const tags = document.querySelector('.tags')
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (event) => {
+                let cs = document.getElementById('cs')
+                let sqa = document.getElementById('sqa')
+                let imgdet = document.getElementById('imgdet')
+
+                tabs.forEach(tab => {
+                    tab.className = 'tab'
+                    tab.style.borderBottom = '0px solid black'
+                })
+                event.target.className = 'tab active text-dark'
+                event.target.style.borderBottom = '2px solid black'
+
+                if (event.target.text == 'CommentSense') {
+                    cs.hidden = false
+                    sqa.hidden = true
+                    imgdet.hidden = true
+                } else if (event.target.text == 'StoQueAns') {
+                    sqa.hidden = false
+                    cs.hidden = true
+                    imgdet.hidden = true
+                } else if (event.target.text == 'WhatIsIt') {
+                    sqa.hidden = true
+                    cs.hidden = true
+                    imgdet.hidden = false
+                }
+            })
+        })
+
+        async function loadtox() {
+            submitbtn.disabled = true
+            toxmodel = await toxicity.load()
+            submitbtn.disabled = await toxmodel ? false : true
+            await toxmodel ? loadsqa() : 0
+        }
+
+        loadtox()
+
+        input.addEventListener('submit', (event) => {
+            event.preventDefault()
+            tags.innerHTML = `<span class="comment">Sense</span>`
+            submitbtn.disabled = true
+            toxmodel.classify(event.target.childNodes[3].value).then(predictions => {
+                submitbtn.disabled = false
+                tags.hidden = false
+                predictions.forEach((prediction) => {
+                    // console.log(prediction.results[0].match, prediction.label)
+                    if (prediction.results[0].match) {
+                        tags.innerHTML += `<span class="tag">${prediction.label}</span>`
+                    }
+                });
+                if (tags.childNodes.length <= 1) {
+                    tags.innerHTML += '<span class="tag nt">No Toxicity Detected</span>'
+                }
+            });
+        })
+
+        input.addEventListener('reset', () => {
+            submitbtn.disabled = toxmodel ? false : true
+            tags.innerHTML = `<span class="comment">Sense</span>`
+        })
+
+        const sqaform = document.getElementById('sqaform')
+        const sqasubmitbtn = document.getElementById('sqasubmit')
+
+        async function loadsqa() {
+            sqasubmitbtn.disabled = true
+            sqamodel = await qna.load()
+            sqasubmitbtn.disabled = await sqamodel ? false : true
+            await sqamodel ? loadimgdet() : 0
+        }
+
+
+        sqaform.addEventListener('submit', (event) => {
+            event.preventDefault()
+            sqasubmitbtn.disabled = true
+            sqamodel.findAnswers(event.target.childNodes[7].value, event.target.childNodes[3].value)
+                .then((answer) => {
+                    console.log(answer)
+                    sqasubmitbtn.disabled = false
+                    if (answer.length !== 0) {
+                        event.target.childNodes[11].value = answer[0].text
+                    }
+                    else {
+                        event.target.childNodes[11].value = '!! Question is not relavent to the story'
+                    }
+                })
+        })
+
+        sqaform.addEventListener('reset', () => {
+            sqasubmitbtn.disabled = sqamodel ? false : true
+        })
+
+        const imagedetform = document.querySelector('#imgdetform')
+        const imgdetsubmitbtn = document.getElementById('imgdetsubmit')
+        const sayit = document.querySelector('.sayit')
+        let img = document.querySelector('img')
+        const imginput = document.querySelector('#imagepicker')
+
+        async function loadimgdet() {
+            imgdetsubmitbtn.disabled = true
+            imgdetmodel = await mobilenet.load()
+            imgdetsubmitbtn.disabled = await imgdetmodel ? false : true
+        }
+
+        imginput.addEventListener('input', (event) => {
+            sayit.hidden = true
+            let reader = new FileReader();
+            reader.addEventListener('load', (event) => {
+                img.src = event.target.result;
+            });
+            reader.readAsDataURL(event.target.files[0]);
+        })
+
+        imagedetform.addEventListener('submit', (event) => {
+            event.preventDefault()
+            imgdetsubmitbtn.disabled = true
+            imgdetmodel.classify(img).then((predictions) => {
+                imgdetsubmitbtn.disabled = false
+                sayit.hidden = false
+                sayit.innerHTML = `<span class="comment">Prediction</span><span class="tag">${predictions[0].className}</span>`
+            })
+        })
+
+        imagedetform.addEventListener('reset', (event) => {
+            imgdetsubmitbtn.disabled = imgdetmodel ? false : true
+            sayit.hidden = true
+        })
+
+    </script>
+</body>
+
+</html>
