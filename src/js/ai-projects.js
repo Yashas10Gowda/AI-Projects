@@ -7,7 +7,9 @@ let AiProjects = class AiProjects extends LitElement {
         this.title = 'My app';
     }
     render() {
-        return html ``;
+        return html `
+            <h1>Hello World</h1>
+        `;
     }
 };
 AiProjects.styles = css ``;

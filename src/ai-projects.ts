@@ -8,6 +8,8 @@ export class AiProjects extends LitElement {
     static styles = css``;
 
     render() {
-        return html``;
+        return html`
+            <h1>Hello World</h1>
+        `;
     }
 }
