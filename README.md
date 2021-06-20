@@ -1,3 +1,17 @@
+# AI-Projects
+As it's AI it'll make mistakes.
+
+## CommentSense
+Before you comment verbally or digitally make sure it's not toxic!
+
+## StoQueAns
+Are you lazy to find an answer to a question from a paragraph? Don't Worry so is Yashas ;)
+
+## WhatIsIt
+Detect what the object is!... digitally.
+
+#### Used Tensorflow.JS Pre-Trained Models.
+
 <p align="center">
   <img width="200" src="https://open-wc.org/hero.png"></img>
 </p>
