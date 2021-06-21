@@ -1,8 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-@customElement('comment-sense')
-export class CS extends LitElement {
+@customElement('pa-que-ans')
+export class PQA extends LitElement {
+
     static styles = css`
         p{
             text-align:center;
@@ -17,33 +18,29 @@ export class CS extends LitElement {
         .center{
             text-align:center;
         }
-        sl-tag{
-            margin-top: 2px;
-        }
     `;
 
     render() {
         return html`
         <div class="tinit-center">
-            <p>Before you comment verbally or digitally make sure it's
-                not
-                toxic!
+            <p>Lazy enough to find an answer to a question from a
+                paragraph? Don't
+                Worry this got you covered
                 <br>
-                <small>For assistance use Artificial Intelligence ;)</small>
+                <small>Enter a paragraph and a question related to it, you
+                    MIGHT get an answer.</small>
             </p>
             <br>
-            <sl-input label="Comment:" help-text="Could be a sentence or a word." placeholder="Your comment goes here."></sl-input>
+            <sl-textarea placeholder="Your paragraph goes here." label="Paragraph:"></sl-textarea>
+            <sl-input label="Question:" placeholder="Your question goes here."></sl-input>
             <div class="center">
                 <sl-button size="small" type="primary">Submit</sl-button>
                 <sl-button size="small" type="default">Reset</sl-button>
             </div>
             <br>
-            <br>
-            <slot name="label">Sense:</slot>
-            <br>
-            <sl-tag type="danger">Danger</sl-tag>
-            <sl-tag type="success">Success</sl-tag>
+            <sl-input label="Answer:" readonly placeholder="Detected answer will appear here."></sl-input>
         </div>
+
         `;
     }
 }

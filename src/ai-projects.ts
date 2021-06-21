@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import './comment-sense.js';
+import './pa-que-ans.js';
+import './what-is-it.js';
 
 @customElement('ai-projects')
 export class AiProjects extends LitElement {
@@ -28,9 +30,9 @@ export class AiProjects extends LitElement {
         <sl-tab slot="nav" panel="pqa">PaQueAns&nbsp;<sl-icon name="book"></sl-icon></sl-tab>
         <sl-tab slot="nav" panel="cs">CommentSense&nbsp;<sl-icon name="chat-square-text"></sl-icon></sl-tab>
         <sl-tab slot="nav" panel="wii">What-Is-It&nbsp;<sl-icon name="camera"></sl-icon></sl-tab>
-        <sl-tab-panel name="pqa">Paragraph Question Answer</sl-tab-panel>
+        <sl-tab-panel name="pqa"><pa-que-ans></pa-que-ans></sl-tab-panel>
         <sl-tab-panel name="cs"><comment-sense></comment-sense></sl-tab-panel>
-        <sl-tab-panel name="wii">What Is It?</sl-tab-panel>
+        <sl-tab-panel name="wii"><what-is-it></what-is-it></sl-tab-panel>
       </sl-tab-group>
     </div>`;
   }

@@ -1,8 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-@customElement('comment-sense')
-export class CS extends LitElement {
+@customElement('what-is-it')
+export class WII extends LitElement {
+
     static styles = css`
         p{
             text-align:center;
@@ -25,25 +26,24 @@ export class CS extends LitElement {
     render() {
         return html`
         <div class="tinit-center">
-            <p>Before you comment verbally or digitally make sure it's
-                not
-                toxic!
+            <p>To detect what the object is!... digitally
                 <br>
-                <small>For assistance use Artificial Intelligence ;)</small>
+                <small>This might help you ;)</small>
             </p>
             <br>
-            <sl-input label="Comment:" help-text="Could be a sentence or a word." placeholder="Your comment goes here."></sl-input>
+            <sl-input label="Photo:" accept="image/*" type="file" placeholder="Your photo goes here."></sl-input>
             <div class="center">
                 <sl-button size="small" type="primary">Submit</sl-button>
                 <sl-button size="small" type="default">Reset</sl-button>
             </div>
             <br>
             <br>
-            <slot name="label">Sense:</slot>
+            <slot name="label">Detected:</slot>
             <br>
             <sl-tag type="danger">Danger</sl-tag>
             <sl-tag type="success">Success</sl-tag>
         </div>
+
         `;
     }
 }
