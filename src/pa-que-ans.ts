@@ -31,14 +31,14 @@ export class PQA extends LitElement {
                     MIGHT get an answer.</small>
             </p>
             <br>
-            <sl-textarea placeholder="Your paragraph goes here." label="Paragraph:"></sl-textarea>
-            <sl-input label="Question:" placeholder="Your question goes here."></sl-input>
+            <sl-textarea pill placeholder="Your paragraph goes here." label="Paragraph:"></sl-textarea>
+            <sl-input pill label="Question:" placeholder="Your question goes here."></sl-input>
             <div class="center">
-                <sl-button size="small" type="primary">Submit</sl-button>
-                <sl-button size="small" type="default">Reset</sl-button>
+                <sl-button pill size="small" type="primary">Submit</sl-button>
+                <sl-button pill size="small" type="default">Reset</sl-button>
             </div>
             <br>
-            <sl-input label="Answer:" readonly placeholder="Detected answer will appear here."></sl-input>
+            <sl-input pill label="Answer:" readonly placeholder="Detected answer will appear here."></sl-input>
         </div>
 
         `;

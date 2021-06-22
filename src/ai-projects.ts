@@ -16,6 +16,7 @@ export class AiProjects extends LitElement {
       text-align: center;
       font-size: var(--sl-font-size-x-large);
       color: var(--sl-color-primary-400);
+      font-weight:400;
     }
     .tab-grp::part(tabs){
       justify-content:center;
@@ -28,7 +29,7 @@ export class AiProjects extends LitElement {
       <h2>AI-Projects</h2>
       <sl-tab-group class="tab-grp">
         <sl-tab slot="nav" panel="pqa">PaQueAns&nbsp;<sl-icon name="book"></sl-icon></sl-tab>
-        <sl-tab slot="nav" panel="cs">CommentSense&nbsp;<sl-icon name="chat-square-text"></sl-icon></sl-tab>
+        <sl-tab active slot="nav" panel="cs">CommentSense&nbsp;<sl-icon name="chat-square-text"></sl-icon></sl-tab>
         <sl-tab slot="nav" panel="wii">What-Is-It&nbsp;<sl-icon name="camera"></sl-icon></sl-tab>
         <sl-tab-panel name="pqa"><pa-que-ans></pa-que-ans></sl-tab-panel>
         <sl-tab-panel name="cs"><comment-sense></comment-sense></sl-tab-panel>

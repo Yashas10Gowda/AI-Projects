@@ -1,7 +1,45 @@
 import { __decorate } from "tslib";
 import { LitElement, html, css } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, query, state } from 'lit/decorators.js';
 let CS = class CS extends LitElement {
+    constructor() {
+        super();
+        this.comment = '';
+        this.loading = true;
+        this.senses = [];
+        toxicity.load(0.75).then(tmodel => {
+            this.model = tmodel;
+            this.loading = false;
+        });
+    }
+    submit() {
+        this.loading = true;
+        this.senses = [];
+        this.requestUpdate();
+        this.model.classify(this.comment).then(predictions => {
+            let atleastOneExists = false;
+            predictions.forEach((prediction) => {
+                if (prediction.results[0].match) {
+                    atleastOneExists = true;
+                    this.senses.push(html `<sl-tag pill type = "danger">${prediction.label.toUpperCase()}</sl-tag>`);
+                }
+            });
+            if (!atleastOneExists) {
+                this.senses.push(html `<sl-tag pill type ="success">No Toxicity Detected</sl-tag>`);
+            }
+            this.loading = false;
+            this.requestUpdate();
+        });
+    }
+    reset() {
+        this.input.value = "";
+        this.comment = "";
+        this.senses = [];
+        this.requestUpdate();
+    }
+    changed() {
+        this.comment = this.input.value;
+    }
     render() {
         return html `
         <div class="tinit-center">
@@ -12,17 +50,15 @@ let CS = class CS extends LitElement {
                 <small>For assistance use Artificial Intelligence ;)</small>
             </p>
             <br>
-            <sl-input label="Comment:" help-text="Could be a sentence or a word." placeholder="Your comment goes here."></sl-input>
-            <div class="center">
-                <sl-button size="small" type="primary">Submit</sl-button>
-                <sl-button size="small" type="default">Reset</sl-button>
-            </div>
+            <sl-input pill label="Comment:" placeholder="Your comment goes here." @input=${this.changed}></sl-input>
+            <sl-button pill size="small" type="primary" @click=${this.submit} ?loading=${this.loading}>Submit</sl-button>
+            <sl-button pill size="small" type="default" @click=${this.reset}>Reset</sl-button>        
+            <br>
             <br>
             <br>
             <slot name="label">Sense:</slot>
             <br>
-            <sl-tag type="danger">Danger</sl-tag>
-            <sl-tag type="success">Success</sl-tag>
+            ${this.senses}
         </div>
         `;
     }
@@ -34,17 +70,24 @@ CS.styles = css `
         .tinit-center{
             max-width:500px;
             margin: 0 auto;
+            text-align:center;
         }
         sl-input{
-            margin: 15px 0;
+            margin: 5px 0;
         }
         .center{
             text-align:center;
         }
         sl-tag{
-            margin-top: 2px;
+            margin: 2px 2px;
         }
     `;
+__decorate([
+    state()
+], CS.prototype, "model", void 0);
+__decorate([
+    query('sl-input')
+], CS.prototype, "input", void 0);
 CS = __decorate([
     customElement('comment-sense')
 ], CS);
