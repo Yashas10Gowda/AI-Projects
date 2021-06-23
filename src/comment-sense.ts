@@ -1,4 +1,4 @@
-import { LitElement, html, css, nothing, Template } from 'lit';
+import { LitElement, html, css } from 'lit';
 import { customElement, query, state } from 'lit/decorators.js';
 declare var tf: any;
 declare var toxicity: any;
@@ -38,11 +38,14 @@ export class CS extends LitElement {
 
     comment: string = '';
     loading: boolean = true;
-    senses: any = [];
+    senses: unknown[] = [];
     @query('sl-input')
     input!: HTMLInputElement;
 
     submit() {
+        if (this.loading || this.comment.length === 0) {
+            return;
+        }
         this.loading = true;
         this.senses = [];
         this.requestUpdate();
@@ -69,8 +72,11 @@ export class CS extends LitElement {
         this.requestUpdate();
     }
 
-    changed() {
+    changed(e: KeyboardEvent) {
         this.comment = this.input.value;
+        if (e.key === 'Enter') {
+            this.submit();
+        }
     }
 
     render() {
@@ -83,7 +89,7 @@ export class CS extends LitElement {
                 <small>For assistance use Artificial Intelligence ;)</small>
             </p>
             <br>
-            <sl-input pill label="Comment:" placeholder="Your comment goes here." @input=${this.changed}></sl-input>
+            <sl-input pill label="Comment:" placeholder="Your comment goes here." @keyup=${this.changed}></sl-input>
             <sl-button pill size="small" type="primary" @click=${this.submit} ?loading=${this.loading}>Submit</sl-button>
             <sl-button pill size="small" type="default" @click=${this.reset}>Reset</sl-button>        
             <br>

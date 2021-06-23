@@ -13,6 +13,9 @@ let CS = class CS extends LitElement {
         });
     }
     submit() {
+        if (this.loading || this.comment.length === 0) {
+            return;
+        }
         this.loading = true;
         this.senses = [];
         this.requestUpdate();
@@ -37,8 +40,11 @@ let CS = class CS extends LitElement {
         this.senses = [];
         this.requestUpdate();
     }
-    changed() {
+    changed(e) {
         this.comment = this.input.value;
+        if (e.key === 'Enter') {
+            this.submit();
+        }
     }
     render() {
         return html `
@@ -50,7 +56,7 @@ let CS = class CS extends LitElement {
                 <small>For assistance use Artificial Intelligence ;)</small>
             </p>
             <br>
-            <sl-input pill label="Comment:" placeholder="Your comment goes here." @input=${this.changed}></sl-input>
+            <sl-input pill label="Comment:" placeholder="Your comment goes here." @keyup=${this.changed}></sl-input>
             <sl-button pill size="small" type="primary" @click=${this.submit} ?loading=${this.loading}>Submit</sl-button>
             <sl-button pill size="small" type="default" @click=${this.reset}>Reset</sl-button>        
             <br>
