@@ -28,7 +28,7 @@ AiProjects.styles = css `
     h2{
       text-align: center;
       font-size: var(--sl-font-size-x-large);
-      color: var(--sl-color-primary-400);
+      color: var(--sl-color-primary-500);
       font-weight:400;
     }
     .tab-grp::part(tabs){

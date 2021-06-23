@@ -4,22 +4,21 @@ import { customElement, query, state } from 'lit/decorators.js';
 let CS = class CS extends LitElement {
     constructor() {
         super();
-        this.comment = '';
-        this.loading = true;
+        this.isLoading = true;
         this.senses = [];
         toxicity.load(0.75).then(tmodel => {
             this.model = tmodel;
-            this.loading = false;
+            this.isLoading = false;
         });
     }
     submit() {
-        if (this.loading || this.comment.length === 0) {
+        if (this.isLoading || this.input.value.length === 0) {
             return;
         }
-        this.loading = true;
+        this.isLoading = true;
         this.senses = [];
         this.requestUpdate();
-        this.model.classify(this.comment).then(predictions => {
+        this.model.classify(this.input.value).then(predictions => {
             let atleastOneExists = false;
             predictions.forEach((prediction) => {
                 if (prediction.results[0].match) {
@@ -30,18 +29,16 @@ let CS = class CS extends LitElement {
             if (!atleastOneExists) {
                 this.senses.push(html `<sl-tag pill type ="success">No Toxicity Detected</sl-tag>`);
             }
-            this.loading = false;
+            this.isLoading = false;
             this.requestUpdate();
         });
     }
     reset() {
         this.input.value = "";
-        this.comment = "";
         this.senses = [];
         this.requestUpdate();
     }
-    changed(e) {
-        this.comment = this.input.value;
+    enter(e) {
         if (e.key === 'Enter') {
             this.submit();
         }
@@ -56,8 +53,8 @@ let CS = class CS extends LitElement {
                 <small>For assistance use Artificial Intelligence ;)</small>
             </p>
             <br>
-            <sl-input pill label="Comment:" placeholder="Your comment goes here." @keyup=${this.changed}></sl-input>
-            <sl-button pill size="small" type="primary" @click=${this.submit} ?loading=${this.loading}>Submit</sl-button>
+            <sl-input pill label="Comment:" placeholder="Your comment goes here." @keyup=${this.enter}></sl-input>
+            <sl-button pill size="small" type="primary" @click=${this.submit} ?loading=${this.isLoading}>Submit</sl-button>
             <sl-button pill size="small" type="default" @click=${this.reset}>Reset</sl-button>        
             <br>
             <br>
@@ -80,9 +77,6 @@ CS.styles = css `
         }
         sl-input{
             margin: 5px 0;
-        }
-        .center{
-            text-align:center;
         }
         sl-tag{
             margin: 2px 2px;
