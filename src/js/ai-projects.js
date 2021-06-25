@@ -11,8 +11,8 @@ let AiProjects = class AiProjects extends LitElement {
       <h2>AI-Projects</h2>
       <sl-tab-group class="tab-grp">
         <sl-tab slot="nav" panel="pqa">PaQueAns&nbsp;<sl-icon name="book"></sl-icon></sl-tab>
-        <sl-tab  slot="nav" panel="cs">CommentSense&nbsp;<sl-icon name="chat-square-text"></sl-icon></sl-tab>
-        <sl-tab active slot="nav" panel="wii">What-Is-It&nbsp;<sl-icon name="camera"></sl-icon></sl-tab>
+        <sl-tab active slot="nav" panel="cs">CommentSense&nbsp;<sl-icon name="chat-square-text"></sl-icon></sl-tab>
+        <sl-tab slot="nav" panel="wii">What-Is-It&nbsp;<sl-icon name="camera"></sl-icon></sl-tab>
         <sl-tab-panel name="pqa"><pa-que-ans></pa-que-ans></sl-tab-panel>
         <sl-tab-panel name="cs"><comment-sense></comment-sense></sl-tab-panel>
         <sl-tab-panel name="wii"><what-is-it></what-is-it></sl-tab-panel>
