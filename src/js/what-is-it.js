@@ -18,7 +18,7 @@ let WII = class WII extends LitElement {
         this.requestUpdate();
     }
     submit() {
-        if (this.isLoading) {
+        if (this.isLoading || this.imagelink === "") {
             return;
         }
         this.isLoading = true;
@@ -56,7 +56,7 @@ let WII = class WII extends LitElement {
                 </label>
                 <input id="photo" type="file" accept="image/*" @change=${this.change}>
             <div class="center">
-                <sl-button pill size="small" type="primary" @click=${this.submit} ?disabled=${this.imagelink === ''} ?loading=${this.isLoading}>Submit</sl-button>
+                <sl-button pill size="small" type="primary" @click=${this.submit} ?loading=${this.isLoading}>Submit</sl-button>
                 <sl-button pill size="small" type="default" @click=${this.reset}>Reset</sl-button>
             </div>
             <br>

@@ -72,7 +72,7 @@ function t(t,e,i,s){var n,r=arguments.length,o=r<3?e:null===s?s=Object.getOwnPro
         #txtarea::part(label),#question::part(label),#answer::part(label){
             margin-left:var(--sl-spacing-medium);
         }
-    `)),t([rt()],gt.prototype,"model",void 0),t([ot("#txtarea")],gt.prototype,"paragraph",void 0),t([ot("#question")],gt.prototype,"question",void 0),t([ot("#answer")],gt.prototype,"answer",void 0),gt=t([st("pa-que-ans")],gt);let ft,yt,bt,wt,St=t=>t,xt=class extends it{constructor(){super(),this.isLoading=!0,this.imagelink="",this.predictions=[],mobilenet.load().then((t=>{this.model=t,this.isLoading=!1}))}change(t){let e=t.target.files[0];this.imagelink=window.URL.createObjectURL(e),this.requestUpdate()}submit(){this.isLoading||(this.isLoading=!0,this.predictions=[],this.requestUpdate(),this.model.classify(this.img).then((t=>{let e=!1;t.forEach((t=>{e=!0,this.predictions.push(N(ft||(ft=St`<sl-tag pill type = "success">${0}</sl-tag>`),t.className.toUpperCase()))})),e||this.predictions.push(N(yt||(yt=St`<sl-tag pill type ="danger">Nothing Detected</sl-tag>`))),this.isLoading=!1,this.requestUpdate()})))}reset(){this.imagelink="",this.predictions=[],this.requestUpdate()}render(){return N(bt||(bt=St`
+    `)),t([rt()],gt.prototype,"model",void 0),t([ot("#txtarea")],gt.prototype,"paragraph",void 0),t([ot("#question")],gt.prototype,"question",void 0),t([ot("#answer")],gt.prototype,"answer",void 0),gt=t([st("pa-que-ans")],gt);let ft,yt,bt,wt,St=t=>t,xt=class extends it{constructor(){super(),this.isLoading=!0,this.imagelink="",this.predictions=[],mobilenet.load().then((t=>{this.model=t,this.isLoading=!1}))}change(t){let e=t.target.files[0];this.imagelink=window.URL.createObjectURL(e),this.requestUpdate()}submit(){this.isLoading||""===this.imagelink||(this.isLoading=!0,this.predictions=[],this.requestUpdate(),this.model.classify(this.img).then((t=>{let e=!1;t.forEach((t=>{e=!0,this.predictions.push(N(ft||(ft=St`<sl-tag pill type = "success">${0}</sl-tag>`),t.className.toUpperCase()))})),e||this.predictions.push(N(yt||(yt=St`<sl-tag pill type ="danger">Nothing Detected</sl-tag>`))),this.isLoading=!1,this.requestUpdate()})))}reset(){this.imagelink="",this.predictions=[],this.requestUpdate()}render(){return N(bt||(bt=St`
         <div class="tinit-center">
             <p>To detect what the object is!... digitally
                 <br>
@@ -85,7 +85,7 @@ function t(t,e,i,s){var n,r=arguments.length,o=r<3?e:null===s?s=Object.getOwnPro
                 </label>
                 <input id="photo" type="file" accept="image/*" @change=${0}>
             <div class="center">
-                <sl-button pill size="small" type="primary" @click=${0} ?disabled=${0} ?loading=${0}>Submit</sl-button>
+                <sl-button pill size="small" type="primary" @click=${0} ?loading=${0}>Submit</sl-button>
                 <sl-button pill size="small" type="default" @click=${0}>Reset</sl-button>
             </div>
             <br>
@@ -95,7 +95,7 @@ function t(t,e,i,s){var n,r=arguments.length,o=r<3?e:null===s?s=Object.getOwnPro
             ${0}
         </div>
         <img src=${0}>
-        `),this.imagelink,this.change,this.submit,""===this.imagelink,this.isLoading,this.reset,this.predictions,this.imagelink)}};xt.styles=o(wt||(wt=St`
+        `),this.imagelink,this.change,this.submit,this.isLoading,this.reset,this.predictions,this.imagelink)}};xt.styles=o(wt||(wt=St`
         p{
             text-align:center;
         }
